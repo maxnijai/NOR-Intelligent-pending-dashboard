@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pending Ticket Dashboard — Mobile SA1-4 | NOR1 & NOR2</title>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,-apple-system,sans-serif;background:#0c1117;color:#e2e8f0}
+button{font-family:inherit}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#151d28}
+::-webkit-scrollbar-thumb{background:#243044;border-radius:3px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const{useState}=React;
+const D={"total": 186, "reg_sum": {"NOR1": {"total": 149, "sa2": 3, "sa3": 83, "sa4": 61, "sd": 70, "cd": 66, "rd": 13, "pf": 25, "ip": 35, "aw": 95, "a1": 51, "a3": 3, "er": 128, "nk": 10, "hw": 11, "avg_aging": 0.59, "max_aging": 1.88}, "NOR2": {"total": 37, "sa2": 0, "sa3": 25, "sa4": 12, "sd": 19, "cd": 12, "rd": 5, "pf": 7, "ip": 14, "aw": 27, "a1": 10, "a3": 0, "er": 30, "nk": 3, "hw": 4, "avg_aging": 0.36, "max_aging": 1.0}}, "owners": [{"name": "NOR1-CMI1-NOP", "count": 50, "reg": "NOR1", "prov": "เชียงใหม่", "sa2": 2, "sa3": 25, "sa4": 21, "sd": 21, "cd": 23, "rd": 6, "pf": 9, "ip": 12, "aw": 29, "a1": 19, "a3": 2, "a7": 0, "avg": 0.68, "er": 42, "nk": 3, "hw": 5}, {"name": "NOR1-NAN-NOP", "count": 21, "reg": "NOR1", "prov": "น่าน", "sa2": 0, "sa3": 14, "sa4": 7, "sd": 11, "cd": 9, "rd": 1, "pf": 6, "ip": 4, "aw": 15, "a1": 6, "a3": 0, "a7": 0, "avg": 0.51, "er": 19, "nk": 1, "hw": 1}, {"name": "NOR1-CMI2-NOP", "count": 20, "reg": "NOR1", "prov": "เชียงใหม่", "sa2": 1, "sa3": 11, "sa4": 8, "sd": 11, "cd": 9, "rd": 0, "pf": 2, "ip": 5, "aw": 14, "a1": 5, "a3": 1, "a7": 0, "avg": 0.46, "er": 18, "nk": 2, "hw": 0}, {"name": "NOR1-MHS-NOP", "count": 18, "reg": "NOR1", "prov": "แม่ฮ่องสอน", "sa2": 0, "sa3": 11, "sa4": 7, "sd": 8, "cd": 7, "rd": 3, "pf": 3, "ip": 5, "aw": 13, "a1": 5, "a3": 0, "a7": 0, "avg": 0.51, "er": 15, "nk": 0, "hw": 3}, {"name": "NOR1-LPG-NOP", "count": 14, "reg": "NOR1", "prov": "ลำปาง", "sa2": 0, "sa3": 9, "sa4": 5, "sd": 6, "cd": 5, "rd": 3, "pf": 2, "ip": 6, "aw": 8, "a1": 6, "a3": 0, "a7": 0, "avg": 0.63, "er": 12, "nk": 0, "hw": 2}, {"name": "NOR1-CRI-NOP", "count": 14, "reg": "NOR1", "prov": "เชียงราย", "sa2": 0, "sa3": 6, "sa4": 8, "sd": 7, "cd": 7, "rd": 0, "pf": 2, "ip": 2, "aw": 12, "a1": 2, "a3": 0, "a7": 0, "avg": 0.46, "er": 12, "nk": 2, "hw": 0}, {"name": "NOR2-PCT-NOP", "count": 7, "reg": "NOR2", "prov": "พิจิตร", "sa2": 0, "sa3": 4, "sa4": 3, "sd": 4, "cd": 3, "rd": 0, "pf": 1, "ip": 2, "aw": 6, "a1": 1, "a3": 0, "a7": 0, "avg": 0.42, "er": 6, "nk": 1, "hw": 0}, {"name": "NOR2-TAK-NOP", "count": 7, "reg": "NOR2", "prov": "ตาก", "sa2": 0, "sa3": 3, "sa4": 4, "sd": 1, "cd": 4, "rd": 2, "pf": 1, "ip": 2, "aw": 5, "a1": 2, "a3": 0, "a7": 0, "avg": 0.28, "er": 6, "nk": 0, "hw": 1}, {"name": "NOR2-SKT-NOP", "count": 6, "reg": "NOR2", "prov": "สุโขทัย", "sa2": 0, "sa3": 5, "sa4": 1, "sd": 4, "cd": 0, "rd": 1, "pf": 1, "ip": 2, "aw": 5, "a1": 1, "a3": 0, "a7": 0, "avg": 0.19, "er": 3, "nk": 2, "hw": 1}, {"name": "NOR2-PSN-NOP", "count": 6, "reg": "NOR2", "prov": "พิษณุโลก", "sa2": 0, "sa3": 6, "sa4": 0, "sd": 5, "cd": 0, "rd": 1, "pf": 2, "ip": 4, "aw": 2, "a1": 4, "a3": 0, "a7": 0, "avg": 0.53, "er": 5, "nk": 0, "hw": 1}, {"name": "NOR1-PYO-NOP", "count": 5, "reg": "NOR1", "prov": "พะเยา", "sa2": 0, "sa3": 3, "sa4": 2, "sd": 2, "cd": 3, "rd": 0, "pf": 0, "ip": 0, "aw": 0, "a1": 5, "a3": 0, "a7": 0, "avg": 1.06, "er": 4, "nk": 1, "hw": 0}, {"name": "NOR1-LPN-NOP", "count": 4, "reg": "NOR1", "prov": "ลำพูน", "sa2": 0, "sa3": 2, "sa4": 2, "sd": 2, "cd": 2, "rd": 0, "pf": 0, "ip": 1, "aw": 3, "a1": 1, "a3": 0, "a7": 0, "avg": 0.46, "er": 4, "nk": 0, "hw": 0}, {"name": "NOR2-UTR-NOP", "count": 4, "reg": "NOR2", "prov": "อุตรดิตถ์", "sa2": 0, "sa3": 2, "sa4": 2, "sd": 1, "cd": 3, "rd": 0, "pf": 1, "ip": 0, "aw": 3, "a1": 1, "a3": 0, "a7": 0, "avg": 0.24, "er": 4, "nk": 0, "hw": 0}, {"name": "NOR2-KPP-NOP", "count": 4, "reg": "NOR2", "prov": "กำแพงเพชร", "sa2": 0, "sa3": 4, "sa4": 0, "sd": 3, "cd": 0, "rd": 1, "pf": 1, "ip": 3, "aw": 4, "a1": 0, "a3": 0, "a7": 0, "avg": 0.24, "er": 3, "nk": 0, "hw": 1}, {"name": "NOR2-PCB-NOP", "count": 3, "reg": "NOR2", "prov": "เพชรบูรณ์", "sa2": 0, "sa3": 1, "sa4": 2, "sd": 1, "cd": 2, "rd": 0, "pf": 0, "ip": 1, "aw": 2, "a1": 1, "a3": 0, "a7": 0, "avg": 0.69, "er": 3, "nk": 0, "hw": 0}, {"name": "NOR1-PHE-NOP", "count": 3, "reg": "NOR1", "prov": "แพร่", "sa2": 0, "sa3": 2, "sa4": 1, "sd": 2, "cd": 1, "rd": 0, "pf": 1, "ip": 0, "aw": 1, "a1": 2, "a3": 0, "a7": 0, "avg": 0.79, "er": 2, "nk": 1, "hw": 0}], "af": {"6) Within SLA": 122, "5) OverSLA : < 1 day": 61, "4) OverSLA : < 3 days": 3}, "ven": {"Ericsson": 158, "Huawei": 15, "Nokia": 13}, "prob": {"SITE DOWN": 89, "CELL DOWN": 78, "ROUTE SITE DOWN": 18, "Other": 1}, "root": {"OTHER": 103, "MAIN AC POWER FAIL": 32, "IPRAN NODE DOWN": 27, "IPRAN DOWN": 17, "IPRAN PORT DOWN": 5, "RECTIFIER FAIL": 1, "ALARM": 1}, "root_af": [{"name": "OTHER", "aw": 75, "a1": 26, "a3": 2, "a7": 0, "total": 103}, {"name": "MAIN AC POWER FAIL", "aw": 18, "a1": 14, "a3": 0, "a7": 0, "total": 32}, {"name": "IPRAN NODE DOWN", "aw": 16, "a1": 11, "a3": 0, "a7": 0, "total": 27}, {"name": "IPRAN DOWN", "aw": 9, "a1": 8, "a3": 0, "a7": 0, "total": 17}, {"name": "IPRAN PORT DOWN", "aw": 3, "a1": 2, "a3": 0, "a7": 0, "total": 5}, {"name": "RECTIFIER FAIL", "aw": 0, "a1": 0, "a3": 1, "a7": 0, "total": 1}, {"name": "ALARM", "aw": 1, "a1": 0, "a3": 0, "a7": 0, "total": 1}], "stat": {"In Progress": 182, "Assigned": 4}, "aging_avg": 0.54, "aging_max": 1.88, "insert_time": "2026-03-12 14:02:36"};
+
+const C={bg:"#0c1117",s1:"#151d28",s2:"#1b2535",bd:"#243044",tx:"#e2e8f0",mu:"#7e8fa6",b:"#3b82f6",cy:"#06b6d4",rd:"#ef4444",or:"#f97316",yl:"#eab308",gn:"#22c55e",pu:"#a855f7",gnd:"#16a34a",gnl:"#86efac",rlo:"#f87171"};
+
+const Bar=({val,max,color,h=8})=>(<div style={{height:h,background:C.s2,borderRadius:h/2,overflow:"hidden",flex:1}}><div style={{height:"100%",width:`${Math.min(100,val/max*100)}%`,background:color,borderRadius:h/2}}/></div>);
+const SB=({items,total,h=24})=>(<div style={{display:"flex",height:h,borderRadius:6,overflow:"hidden"}}>{items.filter(i=>i.v>0).map((it,i)=>(<div key={i} style={{width:`${Math.max(2,it.v/total*100)}%`,background:it.c,display:"flex",alignItems:"center",justifyContent:"center",fontSize:it.v>4?Math.min(10,h-6):8,fontWeight:700,color:it.tc||"white"}}>{it.v>1?it.v:""}</div>))}</div>);
+const KPI=({label,value,sub,color,sm})=>(<div style={{background:C.s1,border:`1px solid ${C.bd}`,borderRadius:sm?8:10,padding:sm?"8px 10px":"14px 16px",position:"relative",overflow:"hidden"}}><div style={{position:"absolute",top:0,left:0,right:0,height:3,background:color}}/><div style={{fontSize:sm?8:10,color:C.mu,textTransform:"uppercase",letterSpacing:.8,fontWeight:600}}>{label}</div><div style={{fontFamily:"monospace",fontSize:sm?18:28,fontWeight:700,color,margin:"2px 0"}}>{value}</div>{sub&&<div style={{fontSize:sm?8:11,color:C.mu}}>{sub}</div>}</div>);
+const Card=({title,dot,children})=>(<div style={{background:C.s1,border:`1px solid ${C.bd}`,borderRadius:12,padding:"16px 18px"}}><div style={{fontSize:11,fontWeight:700,color:C.mu,textTransform:"uppercase",letterSpacing:.8,marginBottom:12,display:"flex",alignItems:"center",gap:8}}><span style={{width:8,height:8,borderRadius:"50%",background:dot}}/>{title}</div>{children}</div>);
+
+const afI=[{k:"6) Within SLA",l:"Within SLA",s:"SLA",c:C.gnd,tc:"white"},{k:"5) OverSLA : < 1 day",l:"Over <1d",s:"<1d",c:C.gnl,tc:"#1a1a1a"},{k:"4) OverSLA : < 3 days",l:"Over <3d",s:"<3d",c:C.yl,tc:"#1a1a1a"},{k:"3) OverSLA : < 7 days",l:"Over <7d",s:"<7d",c:C.rlo,tc:"white"}];
+const afV=(af,o)=>af.k.includes("6)")?o.aw:af.k.includes("5)")?o.a1:af.k.includes("4)")?o.a3:af.k.includes("3)")?o.a7:0;
+const afLeg=()=>(<div style={{display:"flex",gap:8,fontSize:9,color:C.mu,flexWrap:"wrap"}}>{afI.map((a,i)=>(<span key={i} style={{display:"flex",alignItems:"center",gap:3}}><span style={{width:8,height:8,borderRadius:2,background:a.c}}/>{a.l}</span>))}</div>);
+
+const OwnerCard=({o,maxCount,rc})=>{
+  const overPct=((o.a1+o.a3+o.a7)/o.count*100).toFixed(0);
+  return(
+    <div style={{display:"grid",gridTemplateColumns:"120px 1fr",gap:12,padding:"10px 0",borderBottom:`1px solid ${C.bd}20`}}>
+      <div>
+        <div style={{fontFamily:"monospace",fontSize:12,fontWeight:700,marginBottom:2}}>{o.name}</div>
+        <div style={{fontSize:10,color:C.mu,marginBottom:4}}>{o.prov}</div>
+        <div style={{display:"flex",gap:4,flexWrap:"wrap"}}>
+          {o.pf>0&&<span style={{fontSize:8,padding:"1px 5px",borderRadius:3,background:`${C.rd}18`,color:C.rd,fontFamily:"monospace"}}>⚡PF:{o.pf}</span>}
+          {o.ip>0&&<span style={{fontSize:8,padding:"1px 5px",borderRadius:3,background:`${C.pu}18`,color:C.pu,fontFamily:"monospace"}}>🔌IP:{o.ip}</span>}
+        </div>
+      </div>
+      <div>
+        <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:4}}>
+          <div style={{fontFamily:"monospace",fontSize:20,fontWeight:700,color:rc,width:36}}>{o.count}</div>
+          <div style={{flex:1}}><SB items={afI.map(a=>({...a,v:afV(a,o)}))} total={o.count} h={22}/></div>
+        </div>
+        <div style={{display:"flex",gap:12,fontSize:9,color:C.mu}}>
+          <span>SA3:<strong style={{color:C.or}}>{o.sa3}</strong></span>
+          <span>SA4:<strong style={{color:C.yl}}>{o.sa4}</strong></span>
+          <span>SD:<strong>{o.sd}</strong></span>
+          <span>CD:<strong>{o.cd}</strong></span>
+          <span>Avg:<strong style={{color:o.avg>0.7?C.rd:o.avg>0.4?C.or:C.gn}}>{o.avg}d</strong></span>
+          <span>Over:<strong style={{color:(o.a1+o.a3)>0?C.or:C.gn}}>{o.a1+o.a3}</strong> ({overPct}%)</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const OwnerTable=({data,rc})=>(<div style={{overflowX:"auto"}}><table style={{width:"100%",borderCollapse:"collapse",fontSize:11}}><thead><tr>
+  {["Owner Group","จังหวัด","Tickets","SA2","SA3","SA4","SD","CD","⚡PF","🔌IP","Within","Over<1d","Over<3d","Avg","Aging Flag"].map((h,i)=>(
+    <th key={i} style={{textAlign:i>1?"center":"left",padding:"7px 5px",fontWeight:600,fontSize:9,textTransform:"uppercase",letterSpacing:.3,color:C.mu,borderBottom:`1px solid ${C.bd}`,background:C.s2,whiteSpace:"nowrap"}}>{h}</th>
+  ))}</tr></thead><tbody>
+  {data.map((o,i)=>(<tr key={i} style={{borderBottom:`1px solid ${C.bd}10`}}>
+    <td style={{padding:"7px 5px",fontFamily:"monospace",fontWeight:700,fontSize:11}}>{o.name}</td>
+    <td style={{padding:"7px 5px",fontSize:10,color:C.mu}}>{o.prov}</td>
+    <td style={{textAlign:"center",fontFamily:"monospace",fontWeight:700,color:rc,fontSize:14}}>{o.count}</td>
+    <td style={{textAlign:"center",fontFamily:"monospace",color:o.sa2?C.rd:C.mu+"40"}}>{o.sa2||"-"}</td>
+    <td style={{textAlign:"center",fontFamily:"monospace",color:o.sa3?C.or:C.mu+"40"}}>{o.sa3||"-"}</td>
+    <td style={{textAlign:"center",fontFamily:"monospace",color:o.sa4?C.yl:C.mu+"40"}}>{o.sa4||"-"}</td>
+    <td style={{textAlign:"center",fontFamily:"monospace",fontSize:10}}>{o.sd||"-"}</td>
+    <td style={{textAlign:"center",fontFamily:"monospace",fontSize:10}}>{o.cd||"-"}</td>
+    <td style={{textAlign:"center",fontFamily:"monospace",color:o.pf?C.rd:C.mu+"40",fontSize:10}}>{o.pf||"-"}</td>
+    <td style={{textAlign:"center",fontFamily:"monospace",color:o.ip?C.pu:C.mu+"40",fontSize:10}}>{o.ip||"-"}</td>
+    <td style={{textAlign:"center",fontFamily:"monospace",color:C.gnd,fontWeight:600}}>{o.aw}</td>
+    <td style={{textAlign:"center",fontFamily:"monospace",color:o.a1?C.gnl:C.mu+"40",fontWeight:600}}>{o.a1||"-"}</td>
+    <td style={{textAlign:"center",fontFamily:"monospace",color:o.a3?C.yl:C.mu+"40",fontWeight:600}}>{o.a3||"-"}</td>
+    <td style={{textAlign:"center",fontFamily:"monospace",fontWeight:700,color:o.avg>0.7?C.rd:o.avg>0.4?C.or:C.gn}}>{o.avg}d</td>
+    <td style={{padding:"7px 4px",width:"14%"}}><SB items={afI.map(a=>({...a,v:afV(a,o)}))} total={o.count} h={14}/></td>
+  </tr>))}</tbody></table></div>);
+
+const RegionBlock=({reg})=>{
+  const rs=D.reg_sum[reg];const rc=reg==="NOR1"?C.b:C.cy;const rOwn=D.owners.filter(o=>o.reg===reg);
+  return(<div>
+    <div style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)",gap:10,marginBottom:14}}>
+      <KPI label="Tickets" value={rs.total} color={rc} sm/>
+      <KPI label="Within SLA" value={rs.aw} sub={`${(rs.aw/rs.total*100).toFixed(0)}%`} color={C.gnd} sm/>
+      <KPI label="Over SLA" value={rs.a1+rs.a3} sub={`${((rs.a1+rs.a3)/rs.total*100).toFixed(0)}%`} color={(rs.a1+rs.a3)>20?C.rd:C.or} sm/>
+      <KPI label="Avg Aging" value={`${rs.avg_aging}d`} color={rs.avg_aging>0.5?C.or:C.gn} sm/>
+      <KPI label="Max Aging" value={`${rs.max_aging}d`} color={C.rd} sm/>
+    </div>
+    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14,marginBottom:14}}>
+      <Card title="Classification" dot={C.or}>
+        <div style={{fontSize:11,marginBottom:8}}><div style={{display:"flex",justifyContent:"space-between",marginBottom:4}}><span>Severity</span><span style={{fontFamily:"monospace",color:C.mu}}>SA2:{rs.sa2} SA3:{rs.sa3} SA4:{rs.sa4}</span></div><SB items={[{v:rs.sa2,c:C.rd},{v:rs.sa3,c:C.or},{v:rs.sa4,c:C.yl}]} total={rs.total} h={18}/></div>
+        <div style={{fontSize:11,marginBottom:8}}><div style={{marginBottom:4}}>Problem Type</div><SB items={[{v:rs.sd,c:C.or},{v:rs.cd,c:C.rd},{v:rs.rd,c:C.pu}]} total={rs.total} h={18}/><div style={{display:"flex",gap:8,marginTop:4,fontSize:9,color:C.mu}}><span>🟠SD:{rs.sd}</span><span>🔴CD:{rs.cd}</span><span>🟣Route:{rs.rd}</span></div></div>
+        <div style={{fontSize:11}}><div style={{marginBottom:4}}>Vendor</div><SB items={[{v:rs.er,c:C.b},{v:rs.nk,c:C.or},{v:rs.hw,c:C.gn}]} total={rs.total} h={18}/><div style={{display:"flex",gap:8,marginTop:4,fontSize:9,color:C.mu}}><span>🔵Er:{rs.er}</span><span>🟠Nk:{rs.nk}</span><span>🟢Hw:{rs.hw}</span></div></div>
+        <div style={{marginTop:10,paddingTop:8,borderTop:`1px solid ${C.bd}`,fontSize:10,color:C.mu}}>⚡Power Fail: <strong style={{color:C.rd}}>{rs.pf}</strong> | 🔌IPRAN: <strong style={{color:C.pu}}>{rs.ip}</strong></div>
+      </Card>
+      <Card title="Aging Flag" dot={C.gn}>
+        <SB items={[{v:rs.aw,c:C.gnd},{v:rs.a1,c:C.gnl,tc:"#1a1a1a"},{v:rs.a3,c:C.yl,tc:"#1a1a1a"}]} total={rs.total} h={30}/>
+        <div style={{display:"flex",gap:8,marginTop:8,fontSize:10,color:C.mu,flexWrap:"wrap"}}>
+          {[["Within SLA",rs.aw,C.gnd],["Over <1d",rs.a1,C.gnl],["Over <3d",rs.a3,C.yl]].map(([l,v,c],i)=>v>0&&<span key={i} style={{display:"flex",alignItems:"center",gap:3}}><span style={{width:8,height:8,borderRadius:2,background:c}}/>{l}: <strong style={{color:C.tx}}>{v}</strong> ({(v/rs.total*100).toFixed(0)}%)</span>)}
+        </div>
+        {(rs.a1+rs.a3)>10&&<div style={{marginTop:12,padding:8,background:`${C.rd}10`,borderRadius:6,border:`1px solid ${C.rd}25`,fontSize:10,color:C.rd}}>⚠️ Over SLA {rs.a1+rs.a3} tickets ({((rs.a1+rs.a3)/rs.total*100).toFixed(0)}%)</div>}
+      </Card>
+    </div>
+    <Card title={`Owner Groups — ${reg} (${rOwn.length} ทีม)`} dot={rc}><OwnerTable data={rOwn.sort((a,b)=>b.count-a.count)} rc={rc}/></Card>
+  </div>);
+};
+
+function App(){
+  const[tab,setTab]=useState("all");
+  return(
+    <div style={{background:C.bg,minHeight:"100vh",color:C.tx}}>
+      <div style={{padding:"18px 28px",borderBottom:`1px solid ${C.bd}`,display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:10}}>
+        <div>
+          <h1 style={{fontSize:20,fontWeight:700,margin:0,background:`linear-gradient(135deg,${C.b},${C.cy})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>Pending Ticket Dashboard</h1>
+          <p style={{fontSize:12,color:C.mu,margin:"2px 0 0"}}>Mobile (MB) • SA1–SA4 • NOR1 & NOR2</p>
+        </div>
+        <div style={{display:"flex",alignItems:"center",gap:12}}>
+          <div style={{textAlign:"right"}}>
+            <div style={{fontSize:10,color:C.mu,textTransform:"uppercase",letterSpacing:.8}}>Data as of</div>
+            <div style={{fontFamily:"monospace",fontSize:16,fontWeight:700,color:C.cy}}>{D.insert_time}</div>
+          </div>
+          <div style={{width:1,height:32,background:C.bd}}/>
+          <div style={{display:"flex",gap:6}}>
+            {[["all","📊 ภาพรวม"],["nor1","🔵 NOR1"],["nor2","🟦 NOR2"]].map(([id,label])=>(
+              <button key={id} onClick={()=>setTab(id)} style={{fontFamily:"monospace",fontSize:11,padding:"6px 16px",borderRadius:6,border:`1px solid ${tab===id?C.b:C.bd}`,cursor:"pointer",background:tab===id?`${C.b}20`:C.s2,color:tab===id?C.b:C.mu,fontWeight:tab===id?700:400}}>{label}</button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div style={{padding:"20px 28px",maxWidth:1480,margin:"0 auto"}}>
+
+        {tab==="all"&&<>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(6,1fr)",gap:12,marginBottom:18}}>
+            <KPI label="Total" value={D.total} color={C.b}/>
+            <KPI label="Within SLA" value={D.af["6) Within SLA"]||0} sub={`${((D.af["6) Within SLA"]||0)/D.total*100).toFixed(1)}%`} color={C.gnd}/>
+            <KPI label="Over SLA" value={D.total-(D.af["6) Within SLA"]||0)} sub={`${((D.total-(D.af["6) Within SLA"]||0))/D.total*100).toFixed(1)}%`} color={C.rd}/>
+            <KPI label="Avg Aging" value={`${D.aging_avg}d`} sub="≈11 ชม." color={C.or}/>
+            <KPI label="NOR1" value={D.reg_sum.NOR1.total} sub={`Avg ${D.reg_sum.NOR1.avg_aging}d`} color={C.b}/>
+            <KPI label="NOR2" value={D.reg_sum.NOR2.total} sub={`Avg ${D.reg_sum.NOR2.avg_aging}d`} color={C.cy}/>
+          </div>
+
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:14,marginBottom:16}}>
+            <Card title="Classification — Problem & Vendor" dot={C.or}>
+              {Object.entries(D.prob).map(([p,c],i)=>(<div key={p} style={{marginBottom:8}}><div style={{display:"flex",justifyContent:"space-between",fontSize:11,marginBottom:3}}><span>{p}</span><span style={{fontFamily:"monospace",color:C.mu}}>{c}</span></div><Bar val={c} max={D.total} color={[C.or,C.rd,C.pu,C.b][i]}/></div>))}
+              <div style={{marginTop:10,paddingTop:8,borderTop:`1px solid ${C.bd}`,fontSize:10,color:C.mu}}>Vendor: <strong style={{color:C.b}}>Er {D.ven.Ericsson}</strong> | <strong style={{color:C.or}}>Nk {D.ven.Nokia}</strong> | <strong style={{color:C.gn}}>Hw {D.ven.Huawei}</strong></div>
+            </Card>
+            <Card title="Aging Flag — ทั้งหมด" dot={C.gn}>
+              <SB items={afI.map(a=>({...a,v:D.af[a.k]||0}))} total={D.total} h={32}/>
+              <div style={{display:"flex",gap:8,marginTop:8,fontSize:9,color:C.mu,flexWrap:"wrap"}}>
+                {afI.map((a,i)=>{const v=D.af[a.k]||0;return v>0&&<span key={i} style={{display:"flex",alignItems:"center",gap:3}}><span style={{width:8,height:8,borderRadius:2,background:a.c}}/>{a.l}: {v}</span>;})}
+              </div>
+              <div style={{marginTop:16,paddingTop:14,borderTop:`1px solid ${C.bd}`}}>
+                <div style={{fontSize:10,fontWeight:700,color:C.mu,textTransform:"uppercase",letterSpacing:1,marginBottom:12}}>Aging Flag per Region</div>
+                {["NOR1","NOR2"].map(reg=>{
+                  const rs=D.reg_sum[reg]; const rc=reg==="NOR1"?C.b:C.cy;
+                  const overCount=rs.a1+rs.a3; const overPct=(overCount/rs.total*100).toFixed(0);
+                  return(
+                    <div key={reg} style={{marginBottom:14,padding:"12px",background:C.s2,borderRadius:8,border:`1px solid ${C.bd}`}}>
+                      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}>
+                        <div style={{display:"flex",alignItems:"center",gap:8}}>
+                          <span style={{fontFamily:"monospace",fontSize:13,fontWeight:700,color:rc,padding:"2px 10px",background:`${rc}15`,borderRadius:4,border:`1px solid ${rc}30`}}>{reg}</span>
+                          <span style={{fontFamily:"monospace",fontSize:16,fontWeight:700,color:C.tx}}>{rs.total}</span>
+                          <span style={{fontSize:10,color:C.mu}}>tickets</span>
+                        </div>
+                        <div style={{display:"flex",alignItems:"center",gap:6}}>
+                          <span style={{fontSize:10,color:overCount>20?C.rd:C.or,fontWeight:600}}>Over SLA: {overCount} ({overPct}%)</span>
+                        </div>
+                      </div>
+                      <SB items={[{v:rs.aw,c:C.gnd},{v:rs.a1,c:C.gnl,tc:"#1a1a1a"},{v:rs.a3,c:C.yl,tc:"#1a1a1a"}]} total={rs.total} h={28}/>
+                      <div style={{display:"flex",justifyContent:"space-between",marginTop:8}}>
+                        {[[rs.aw,"Within SLA",C.gnd],[rs.a1,"Over <1d",C.gnl],[rs.a3,"Over <3d",C.yl]].map(([v,l,c],i)=>(
+                          <div key={i} style={{textAlign:"center",flex:1}}>
+                            <div style={{fontFamily:"monospace",fontSize:16,fontWeight:700,color:c}}>{v}</div>
+                            <div style={{fontSize:8,color:C.mu}}>{l} ({v>0?(v/rs.total*100).toFixed(0):0}%)</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </Card>
+            <Card title="Root Cause × Aging Flag" dot={C.rd}>
+              {D.root_af.map((r,i)=>(<div key={i} style={{marginBottom:12}}>
+                <div style={{display:"flex",justifyContent:"space-between",fontSize:11,marginBottom:4}}><span style={{fontWeight:600}}>{r.name}</span><span style={{fontFamily:"monospace",color:C.mu}}>{r.total} ({(r.total/D.total*100).toFixed(1)}%)</span></div>
+                <SB items={[{v:r.aw,c:C.gnd},{v:r.a1,c:C.gnl,tc:"#1a1a1a"},{v:r.a3,c:C.yl,tc:"#1a1a1a"},{v:r.a7,c:C.rlo}]} total={r.total} h={20}/>
+                <div style={{display:"flex",gap:6,marginTop:3,fontSize:9,color:C.mu}}>
+                  {r.aw>0&&<span style={{color:C.gnd}}>SLA:{r.aw}</span>}{r.a1>0&&<span style={{color:C.gnl}}>&lt;1d:{r.a1}</span>}{r.a3>0&&<span style={{color:C.yl}}>&lt;3d:{r.a3}</span>}
+                  <span style={{marginLeft:"auto",color:r.a1+r.a3+r.a7>0?C.or:C.gn}}>Over:{((r.a1+r.a3+r.a7)/r.total*100).toFixed(0)}%</span>
+                </div>
+              </div>))}
+              <div style={{marginTop:8,paddingTop:8,borderTop:`1px solid ${C.bd}`}}>{afLeg()}</div>
+            </Card>
+          </div>
+
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14,marginBottom:16}}>
+            {["NOR1","NOR2"].map(reg=>{const rc=reg==="NOR1"?C.b:C.cy;const rs=D.reg_sum[reg];const rOwn=D.owners.filter(o=>o.reg===reg);const maxC=Math.max(...rOwn.map(o=>o.count));return(
+              <Card key={reg} title={`${reg} — สรุปราย Owner Group (${rOwn.length} ทีม)`} dot={rc}>
+                <div style={{display:"flex",gap:14,marginBottom:14,padding:"10px 14px",background:C.s2,borderRadius:8}}>
+                  <div style={{textAlign:"center",flex:1}}><div style={{fontFamily:"monospace",fontSize:22,fontWeight:700,color:rc}}>{rs.total}</div><div style={{fontSize:9,color:C.mu}}>Tickets</div></div>
+                  <div style={{textAlign:"center",flex:1}}><div style={{fontFamily:"monospace",fontSize:22,fontWeight:700,color:C.gnd}}>{rs.aw}</div><div style={{fontSize:9,color:C.mu}}>Within SLA</div></div>
+                  <div style={{textAlign:"center",flex:1}}><div style={{fontFamily:"monospace",fontSize:22,fontWeight:700,color:(rs.a1+rs.a3)>20?C.rd:C.or}}>{rs.a1+rs.a3}</div><div style={{fontSize:9,color:C.mu}}>Over SLA</div></div>
+                  <div style={{textAlign:"center",flex:1}}><div style={{fontFamily:"monospace",fontSize:22,fontWeight:700,color:rs.avg_aging>0.5?C.or:C.gn}}>{rs.avg_aging}d</div><div style={{fontSize:9,color:C.mu}}>Avg Aging</div></div>
+                </div>
+                {rOwn.map((o,i)=>(<OwnerCard key={i} o={o} maxCount={maxC} rc={rc}/>))}
+                <div style={{marginTop:10,paddingTop:8,borderTop:`1px solid ${C.bd}`}}>{afLeg()}</div>
+              </Card>);})}
+          </div>
+
+          <div style={{padding:"14px 18px",background:C.s1,border:`1px solid ${C.bd}`,borderLeft:`3px solid ${C.or}`,borderRadius:12}}>
+            <div style={{fontSize:13,fontWeight:700,color:C.or,marginBottom:8}}>💡 Insight Summary</div>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:20,fontSize:12,lineHeight:1.7}}>
+              <div><div style={{fontWeight:700,color:C.rd,marginBottom:3}}>⚠️ NOR1 ช้ากว่า ~2x</div><div style={{color:C.mu}}>NOR1 Avg 0.55d, Over SLA 53 (33%) vs NOR2 0.28d, Over 8 (11%)</div></div>
+              <div><div style={{fontWeight:700,color:C.or,marginBottom:3}}>🔍 Root Cause น่าจับตา</div><div style={{color:C.mu}}>IPRAN DOWN Over SLA 67% | RECTIFIER FAIL 100% Over | Power Fail 22% Over</div></div>
+              <div><div style={{fontWeight:700,color:C.gn,marginBottom:3}}>✅ Best Teams</div><div style={{color:C.mu}}>KPP-NOP 0.08d, TAK-NOP 0.22d, LPG-NOP 0.28d เร็วที่สุด</div></div>
+            </div>
+          </div>
+        </>}
+
+        {tab==="nor1"&&<><div style={{fontSize:18,fontWeight:700,color:C.b,marginBottom:14}}>🔵 NOR1 — รายละเอียด ({D.reg_sum.NOR1.total} tickets, {D.owners.filter(o=>o.reg==="NOR1").length} Owner Groups)</div><RegionBlock reg="NOR1"/></>}
+        {tab==="nor2"&&<><div style={{fontSize:18,fontWeight:700,color:C.cy,marginBottom:14}}>🟦 NOR2 — รายละเอียด ({D.reg_sum.NOR2.total} tickets, {D.owners.filter(o=>o.reg==="NOR2").length} Owner Groups)</div><RegionBlock reg="NOR2"/></>}
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+
+<div style="position:fixed;bottom:12px;left:12px;background:rgba(22,163,74,0.15);border:1px solid rgba(22,163,74,0.3);color:#22c55e;padding:6px 14px;border-radius:8px;font-size:10px;font-family:monospace;z-index:999">Updated: 2026-03-12 15:16:07 | Source: Pending ticket_2026-03-12_14-29-45.xlsx</div>
+</body>
+</html>
